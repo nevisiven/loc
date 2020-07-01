@@ -12,67 +12,39 @@
         THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/'
     </script>
 	<script>
-	const AFRAME = window.AFRAME;
-
-/*
-* Scales the object proportionally to a set value given in meters.
-*/
-
-AFRAME.registerComponent('natural-size', {
+	AFRAME.registerComponent('resize', {
   schema: {
-    width: {
-      type: "number",
-      default: undefined // meters
+    axis: {
+      type: 'string',
+      default: 'x'
     },
-    height: {
-      type: "number",
-      default: undefined // meters
-    },
-    depth: {
-      type: "number",
-      default: undefined // meters
+    value: {
+      type: 'number',
+      default: 1
     }
   },
-
-  init() {
-    this.el.addEventListener('model-loaded', this.rescale.bind(this));
-  },
-
-  update() {
-    this.rescale();
-  },
-
-  rescale() {
-
-    const el = this.el;
-    const data = this.data;
-    const model = el.object3D;
-
-    const box = new THREE.Box3().setFromObject(model);
-    const size = box.getSize();
-
-    if ( !size.x && !size.y && !size.z ) {
-      return;
-    }
-
-    let scale = 1;
-
-    if ( data.width ) {
-      scale = data.width / size.x;
-    } else if( data.height ) {
-      scale = data.height ( size.y);
-    } else if( data.depth ) {
-      scale = data.depth / size.y;
-    }
-
-    el.setAttribute('scale', `${scale} ${scale} ${scale}`);
-
-  },
-
-  remove() {
-    this.el.removeEventListener('model-loaded', this.rescale);
+  init: function() {
+    var el = this.el;
+    var data = this.data;
+    var model = el.object3D;
+    el.addEventListener('model-loaded', function(e) {
+      var box = new THREE.Box3().setFromObject( model );
+      var size = box.getSize();
+      var x = size.x;
+      var y = size.y;
+      var z = size.z;
+      if(data.axis === 'x') {
+        var scale = data.value / x;
+      }
+      else if(data.axis === 'y') {
+        var scale = data.value / y;
+      }
+      else {
+        var scale = data.value / z;
+      }
+      el.setAttribute('scale', scale + ' ' + scale + ' ' + scale);
+    });
   }
-
 });
 	</script>
 </head>
@@ -82,7 +54,7 @@ AFRAME.registerComponent('natural-size', {
         vr-mode-ui="enabled: false"
 		embedded
         arjs='sourceType: webcam; debugUIEnabled: false;'>
-<a-entity natural-size='width:5' gltf-model="./magnemite/scene.gltf />
+<a-entity resize='axis:x; value:0.5' gltf-model="./magnemite/scene.gltf />
         
         <a-camera gps-camera rotation-reader></a-camera>
 	</a-scene>
