@@ -124,17 +124,17 @@
         {
             "mimeType" : "image/png",
             "name" : "Material.001_Height",
-            "uri" : "gaynlord/Material_001_Height.png"
+            "uri" : "textures/Material_001_Height.png"
         },
         {
             "mimeType" : "image/png",
             "name" : "Material.002_Base_Color",
-            "uri" : "gaynlord/Material_002_Base_Color.png"
+            "uri" : "textures/Material_002_Base_Color.png"
         },
         {
             "mimeType" : "image/png",
             "name" : "Material.001_Metallic-Material.001_Roughness",
-            "uri" : "gaynlord/Material_001_Metallic-Material_001_Roughness.png"
+            "uri" : "textures/Material_001_Metallic-Material_001_Roughness.png"
         }
     ],
     "accessors" : [
@@ -252,7 +252,7 @@
     "buffers" : [
         {
             "byteLength" : 147632,
-            "uri" : "untitled.bin"
+            "uri" : "scene.bin"
         }
     ]
 }
